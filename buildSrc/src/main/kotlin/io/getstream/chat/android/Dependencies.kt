@@ -81,6 +81,7 @@ object Versions {
     internal const val TIMBER = "5.0.1"
     internal const val TURBINE = "1.0.0"
     internal const val WORK = "2.8.1"
+    internal const val JFROG = "5.2.0"
 }
 
 object Dependencies {
@@ -230,6 +231,7 @@ object Dependencies {
     const val turbine = "app.cash.turbine:turbine:${Versions.TURBINE}"
     const val workRuntimeKtx = "androidx.work:work-runtime-ktx:${Versions.WORK}"
     const val workTesting = "androidx.work:work-testing:${Versions.WORK}"
+    const val jfrog = "org.jfrog.buildinfo:build-info-extractor-gradle:${Versions.JFROG}"
 
     @JvmStatic
     fun isNonStable(version: String): Boolean = isStable(version).not()

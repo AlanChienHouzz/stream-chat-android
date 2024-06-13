@@ -1,6 +1,7 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'com.jfrog.artifactory'
 
 tasks.register('androidSourcesJar', Jar) {
     archiveClassifier.set('sources')
@@ -32,6 +33,12 @@ artifacts {
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream()) // load local.properties
+def CI_USER = properties.getProperty("CI_USER") // read property from local.properties
+def CI_PASSWORD = properties.getProperty("CI_PASSWORD")
+
+
 afterEvaluate {
     publishing {
         publications {
@@ -51,13 +58,13 @@ afterEvaluate {
                 pom {
                     name = PUBLISH_ARTIFACT_ID
                     description = 'Stream Chat official Android SDK'
-                    url = 'https://github.com/getstream/stream-chat-android'
                     licenses {
                         license {
                             name = 'Stream License'
                             url = 'https://github.com/GetStream/stream-chat-android/blob/main/LICENSE'
                         }
                     }
+                    url = 'https://github.com/AlanChienHouzz/stream-chat-android'
                     developers {
                         developer {
                             id = 'tschellenbach'
@@ -99,23 +106,27 @@ afterEvaluate {
                             name = 'Dmitrii Bychkov'
                             email = 'dmitrii@getstream.io'
                         }
-                    }
-                    scm {
-                        connection = 'scm:git:github.com/getstream/stream-chat-android.git'
-                        developerConnection = 'scm:git:ssh://github.com/getstream/stream-chat-android.git'
-                        url = 'https://github.com/getstream/stream-chat-android/tree/main'
+                        developer {
+                            id = 'alan'
+                            name = 'Alan Chien'
+                            email = 'alan.chien@houzz.com'
+                        }
                     }
                 }
             }
         }
     }
-}
-
-signing {
-    useInMemoryPgpKeys(
-            rootProject.ext["signing.keyId"],
-            rootProject.ext["signing.key"],
-            rootProject.ext["signing.password"],
-    )
-    sign publishing.publications
+    artifactory {
+        contextUrl = 'http://artifactory.ivyco.net/artifactory/mobile-android/'
+        publish {
+            repository {
+                repoKey = "libs-release-local"
+                username = CI_USER
+                password = CI_PASSWORD
+            }
+        }
+    }
+    artifactoryPublish {
+        publications(publishing.publications.release)
+    }
 }

@@ -6,7 +6,7 @@ import io.getstream.chat.android.command.version.plugin.VersionBumpPlugin
 import io.getstream.chat.android.command.version.plugin.MinorBumpPlugin
 import io.getstream.chat.android.command.version.plugin.VersionPrintPlugin
 import io.getstream.chat.android.command.changelog.plugin.ChangelogAddModelSectionPlugin
-
+apply plugin: 'com.jfrog.artifactory'
 apply plugin: "com.github.ben-manes.versions"
 apply plugin: 'io.github.gradle-nexus.publish-plugin'
 apply plugin: 'binary-compatibility-validator'
@@ -45,6 +45,7 @@ buildscript {
         classpath Dependencies.spotlessGradlePlugin
         classpath Dependencies.ksp
         classpath Dependencies.detektPlugin
+        classpath Dependencies.jfrog
     }
 }
 

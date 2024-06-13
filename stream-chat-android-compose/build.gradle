@@ -25,6 +25,13 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     resourcePrefix 'stream_compose_'
 
     buildTypes {

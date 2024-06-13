@@ -20,6 +20,13 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     resourcePrefix 'stream_'
 
     testOptions {
