@@ -1,5 +1,5 @@
-import io.getstream.chat.android.Dependencies
 import io.getstream.chat.android.Configuration
+import io.getstream.chat.android.Dependencies
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -23,6 +23,14 @@ android {
 
         buildConfigField 'String', 'STREAM_CHAT_VERSION', "\"$version\""
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

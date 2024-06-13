@@ -19,6 +19,13 @@ android {
     namespace = "io.getstream.chat.android.previewdata"
     resourcePrefix = "stream_compose_previewdata"
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
     defaultConfig {
         consumerProguardFiles("consumer-rules.pro")
     }
