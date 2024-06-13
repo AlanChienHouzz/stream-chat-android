@@ -25,4 +25,4 @@ public fun Attachment.getDisplayableName(): String? {
 }
 
 public val Attachment.imagePreviewUrl: String?
-    get() = thumbUrl ?: imageUrl
+    get() = extraData["previewUrl"] as? String ?: thumbUrl ?: imageUrl
