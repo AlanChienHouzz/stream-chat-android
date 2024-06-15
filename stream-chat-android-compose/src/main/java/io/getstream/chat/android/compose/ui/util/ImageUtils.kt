@@ -43,8 +43,6 @@ import com.skydoves.landscapist.plugins.ImagePlugin
 import io.getstream.chat.android.compose.R
 import io.getstream.chat.android.compose.ui.theme.ChatTheme
 import io.getstream.chat.android.ui.common.helper.ImageHeadersProvider
-import io.getstream.chat.android.uiutils.util.adjustColorBrightness
-import kotlin.math.abs
 
 private const val GradientDarkerColorFactor = 1.3f
 private const val GradientLighterColorFactor = 0.7f
@@ -57,18 +55,11 @@ private const val GradientLighterColorFactor = 0.7f
  */
 @Composable
 @ReadOnlyComposable
-internal fun initialsGradient(initials: String): Brush {
+internal fun initialsGradient(initials: String): Color {
     val gradientBaseColors = LocalContext.current.resources.getIntArray(R.array.stream_compose_avatar_gradient_colors)
-
-    val baseColorIndex = abs(initials.hashCode()) % gradientBaseColors.size
-    val baseColor = gradientBaseColors[baseColorIndex]
-
-    return Brush.linearGradient(
-        listOf(
-            Color(adjustColorBrightness(baseColor, GradientDarkerColorFactor)),
-            Color(adjustColorBrightness(baseColor, GradientLighterColorFactor)),
-        ),
-    )
+    val charSum = getHashCode(initials)
+    val indicatorColorResInt = gradientBaseColors[charSum % gradientBaseColors.size]
+    return Color(indicatorColorResInt)
 }
 
 /**
@@ -109,10 +100,10 @@ public fun StreamImage(
     previewPlaceholder: Painter? = null,
     loading: @Composable (BoxScope.(imageState: CoilImageState.Loading) -> Unit)? = null,
     success: @Composable (
-        BoxScope.(
-            imageState: CoilImageState.Success,
-            painter: Painter,
-        ) -> Unit
+    BoxScope.(
+        imageState: CoilImageState.Success,
+        painter: Painter,
+    ) -> Unit
     )? = null,
     failure: @Composable (BoxScope.(imageState: CoilImageState.Failure) -> Unit)? = null,
 ) {
@@ -153,10 +144,10 @@ public fun StreamImage(
     previewPlaceholder: Painter? = null,
     loading: @Composable (BoxScope.(imageState: CoilImageState.Loading) -> Unit)? = null,
     success: @Composable (
-        BoxScope.(
-            imageState: CoilImageState.Success,
-            painter: Painter,
-        ) -> Unit
+    BoxScope.(
+        imageState: CoilImageState.Success,
+        painter: Painter,
+    ) -> Unit
     )? = null,
     failure: @Composable (BoxScope.(imageState: CoilImageState.Failure) -> Unit)? = null,
 ) {
@@ -339,3 +330,11 @@ private fun ImageRequest.provideHeaders(
  * See: https://github.com/coil-kt/coil/issues/884#issuecomment-975932886
  */
 internal const val RetryHash: String = "retry_hash"
+
+private fun getHashCode(name: String): Int {
+    return if (name.length > 1) {
+        name[0].code + name[1].code
+    } else {
+        name[0].code
+    }
+}

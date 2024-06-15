@@ -71,7 +71,7 @@ public fun InitialsAvatar(
     Box(
         modifier = clickableModifier
             .clip(shape)
-            .background(brush = initialsGradient),
+            .background(color = initialsGradient),
     ) {
         Text(
             modifier = Modifier

@@ -17,8 +17,12 @@
 package io.getstream.chat.android.ui.common.utils.extensions
 
 internal fun String.initials(): String {
-    return trim()
-        .split("\\s+".toRegex())
+    var initials = ""
+    this.split(" ").asSequence()
+        .filter { it.isNotBlank() }
         .take(2)
-        .joinToString(separator = "") { it.take(1).uppercase() }
+        .forEach {
+            initials += it.first().uppercase()
+        }
+    return initials.ifEmpty { "HZ" }
 }
