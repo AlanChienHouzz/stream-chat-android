@@ -139,13 +139,16 @@ public fun defaultMessageOptionsState(
     // user capabilities
     val canQuoteMessage = ownCapabilities.contains(ChannelCapabilities.QUOTE_MESSAGE)
     val canThreadReply = ownCapabilities.contains(ChannelCapabilities.SEND_REPLY)
-    val canPinMessage = ownCapabilities.contains(ChannelCapabilities.PIN_MESSAGE)
+    // val canPinMessage = ownCapabilities.contains(ChannelCapabilities.PIN_MESSAGE)
+    val canPinMessage = false // temporary disable it since web & ios doesn't supported.
     val canDeleteOwnMessage = ownCapabilities.contains(ChannelCapabilities.DELETE_OWN_MESSAGE)
     val canDeleteAnyMessage = ownCapabilities.contains(ChannelCapabilities.DELETE_ANY_MESSAGE)
     val canEditOwnMessage = ownCapabilities.contains(ChannelCapabilities.UPDATE_OWN_MESSAGE)
     val canEditAnyMessage = ownCapabilities.contains(ChannelCapabilities.UPDATE_ANY_MESSAGE)
-    val canMarkAsUnread = ownCapabilities.contains(ChannelCapabilities.READ_EVENTS)
-    val canFlagMessage = ownCapabilities.contains(ChannelCapabilities.FLAG_MESSAGE)
+    // val canMarkAsUnread = ownCapabilities.contains(ChannelCapabilities.READ_EVENTS)
+    val canMarkAsUnread = false // temporary disable it since web & ios doesn't supported.
+    // val canFlagMessage = ownCapabilities.contains(ChannelCapabilities.FLAG_MESSAGE)
+    val canFlagMessage = false// temporary disable it since web & ios doesn't supported.
 
     val isThreadReplyPossible = !isInThread && isMessageSynced && canThreadReply
     val isEditMessagePossible = ((isOwnMessage && canEditOwnMessage) || canEditAnyMessage) && !selectedMessage.isGiphy()
