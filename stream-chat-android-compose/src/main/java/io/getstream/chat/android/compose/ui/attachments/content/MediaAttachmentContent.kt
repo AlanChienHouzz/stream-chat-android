@@ -24,6 +24,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -415,12 +416,14 @@ internal fun MediaAttachmentContentItem(
         } else {
             null
         }
-
+    val placeholder =
+        if (isSystemInDarkTheme()) R.drawable.stream_compose_ic_placeholder_dark else R.drawable.stream_compose_ic_placeholder_light
     val context = LocalContext.current
     val model = remember(retryHash) {
         ImageRequest.Builder(context)
             .data(data)
             .setParameter(key = RetryHash, value = retryHash)
+            .error(placeholder)
             .build()
     }
 
