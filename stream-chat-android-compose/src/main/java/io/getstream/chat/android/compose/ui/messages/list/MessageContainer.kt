@@ -182,7 +182,8 @@ internal fun DefaultMessageUnreadSeparatorContent(unreadSeparatorItemState: Unre
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(ChatTheme.messageUnreadSeparatorTheme.backgroundColor),
+            .padding(vertical = 4.dp)
+            .background(ChatTheme.messageUnreadSeparatorTheme.backgroundColor.copy(alpha = 0.8f)),
         contentAlignment = Alignment.Center,
     ) {
         Text(

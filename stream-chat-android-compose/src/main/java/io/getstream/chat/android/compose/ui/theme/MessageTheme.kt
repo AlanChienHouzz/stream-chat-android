@@ -93,7 +93,7 @@ public data class MessageTheme(
             colors: StreamColors,
         ): MessageTheme {
             return MessageTheme(
-                textStyle = typography.bodyBold.copy(
+                textStyle = typography.body.copy(
                     color = when (own) {
                         true -> colors.ownMessageText
                         else -> colors.otherMessageText
@@ -103,7 +103,7 @@ public data class MessageTheme(
                     true -> colors.ownMessagesBackground
                     else -> colors.otherMessagesBackground
                 },
-                quotedTextStyle = typography.bodyBold.copy(
+                quotedTextStyle = typography.body.copy(
                     color = when (own) {
                         true -> colors.ownMessageQuotedText
                         else -> colors.otherMessageQuotedText
